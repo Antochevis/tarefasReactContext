@@ -30,7 +30,7 @@ function Usuarios() {
 
   return (
     <div>
-      <h1>Acesse sua conta</h1>
+      <h1>Cadastre sua conta</h1>
 
       <Formik
         initialValues={{

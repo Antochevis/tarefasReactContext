@@ -1,10 +1,11 @@
+import { ContainerFooter } from "./Footer.Styled"
 
 function Footer() {
   return (
-    <footer>
+    <ContainerFooter>
       <address>Rua Itaipu</address>
       <small>copyright</small>
-    </footer>
+    </ContainerFooter>
   )
 }
 

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
+import { HeaderNavLink } from "./Header.Styled"
 
 function Item({name, url}) {
   return (
-    <li><Link to={url}>{name}</Link></li>
+    <HeaderNavLink><Link to={url}>{name}</Link></HeaderNavLink>
   )
 }
 

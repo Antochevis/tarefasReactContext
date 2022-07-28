@@ -1,27 +1,18 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
-import { useNavigate } from "react-router-dom";
+import { HeaderNavUl } from "./Header.Styled";
 import Item from "./Item"
 
 
 function Menu() {
 
-  const navigate = useNavigate();
-  const token = localStorage.getItem('token');
-
-  useEffect(() => {
-    if(!token) {
-      navigate('/')
-    }
-  },[])
-
-  const {handleLogout} = useContext(AuthContext);
+  const {auth, handleLogout} = useContext(AuthContext);
 
   return (
     
     <nav>
-      <ul>
-        {!token ? 
+      <HeaderNavUl>
+        {!auth ? 
         (<>
           <Item name='Login' url='/'/>
           <Item name='Cadastrar usuário' url='/usuarios'/> </>) : 
@@ -29,8 +20,8 @@ function Menu() {
           <Item name='Endereço' url='/endereco'/>
           <Item name='Pessoa' url='/pessoa' />
         </>)}
-      </ul>
-      {token && <button onClick={handleLogout}>Sair</button>}
+      </HeaderNavUl>
+      {auth && <button onClick={handleLogout}>Sair</button>}
     </nav>
     
   )

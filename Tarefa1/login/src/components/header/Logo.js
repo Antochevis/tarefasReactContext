@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Logo() {
   return (
-    <Link to='/'><FaDragon style={{ fontSize: 50, color: 'red' }}/></Link>
+    <Link to='/'><FaDragon style={{ fontSize: 50, color: 'red', paddingTop: 10 }}/></Link>
   )
 }
 

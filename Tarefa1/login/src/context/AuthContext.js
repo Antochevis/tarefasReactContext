@@ -1,22 +1,29 @@
-import { createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
 import { apiDbc } from "../api";
 
 
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
+  const [auth, setAuth] = useState(false)
+  const [loading, setLoading] = useState(true)
 
-  const [login, setLogin] = useState(false)
-
-  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(token) {
+      apiDbc.defaults.headers.common['Authorization'] = token
+      setAuth(true)
+    }
+    setLoading(false)
+  }, [])
 
   async function handleLogin(user) {
     try {
       const {data} = await apiDbc.post('/auth', user);
       localStorage.setItem('token', data)
-      navigate('/pessoa')
-      setLogin(true)
+      apiDbc.defaults.headers.common['Authorization'] = data
+      setAuth(true)
+      window.location.href = '/endereco'
     } catch (e) {
       alert('deu erro')
     }
@@ -26,7 +33,7 @@ const AuthProvider = ({children}) => {
     try {
       await apiDbc.post('/auth/create', values)
       alert('Usuário cadastrado com sucesso')
-      navigate('/')
+      window.location.href = '/'
     } catch(e) {
       console.log(e)
     }
@@ -34,11 +41,19 @@ const AuthProvider = ({children}) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    navigate('/')
+    apiDbc.defaults.headers.common['Authorization'] = undefined
+    setAuth(false)
+    window.location.href = '/'
   }
 
+  if(loading) {
+    return(
+      <h1>Loading</h1>
+    )
+  }
+  
   return (
-    <AuthContext.Provider value={{handleLogin, handleLogout, handleSignUp}}>
+    <AuthContext.Provider value={{handleLogin, handleLogout, handleSignUp, auth}}>
       {children}
     </AuthContext.Provider>
   )

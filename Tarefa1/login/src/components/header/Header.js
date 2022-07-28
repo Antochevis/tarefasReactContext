@@ -1,12 +1,13 @@
+import { ContainerHeader } from "./Header.Styled";
 import Logo from "./Logo";
 import Menu from "./Menu";
 
 function Header() {
   return (
-    <header>
+    <ContainerHeader>
       <Logo />
       <Menu />
-    </header>
+    </ContainerHeader>
   )
 }
 
