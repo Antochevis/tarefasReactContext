@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Field, Form, Formik } from 'formik';
 import * as yup from "yup";
+import { RegisterButtonFormStyle, RegisterContainer, RegisterFormStyle, RegisterTitle } from './Usuarios.Styled';
 
 const SignupSchema = yup.object().shape({
   login: yup.string()
@@ -29,8 +30,8 @@ function Usuarios() {
   const { handleSignUp } = useContext(AuthContext);
 
   return (
-    <div>
-      <h1>Cadastre sua conta</h1>
+    <RegisterContainer>
+      <RegisterTitle>Cadastre sua conta</RegisterTitle>
 
       <Formik
         initialValues={{
@@ -42,15 +43,23 @@ function Usuarios() {
           handleSignUp(values);
         }}
       >
-      {({errors, touched}) => (
+      {() => (
         <Form>
-          <Field name='login' />
-          <Field type='password' name='senha' />
-          <button type='submit'>Cadastrar</button>
+          <RegisterFormStyle>
+            <div>
+              <label htmlFor="login">Nome: </label>
+              <Field name='login' />
+            </div>
+            <div>
+              <label htmlFor="senha">Senha: </label>
+              <Field type='password' name='senha' />
+            </div>
+          <RegisterButtonFormStyle type='submit'>Cadastrar</RegisterButtonFormStyle>
+          </RegisterFormStyle>
         </Form>
       )}
       </Formik>
-    </div>
+    </RegisterContainer>
   )
 }
 

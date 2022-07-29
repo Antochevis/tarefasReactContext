@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
-import { HeaderNavUl } from "./Header.Styled";
+import { HeaderNav, HeaderNavButton, HeaderNavUl } from "./Header.Styled";
 import Item from "./Item"
 
 
@@ -10,7 +10,7 @@ function Menu() {
 
   return (
     
-    <nav>
+    <HeaderNav>
       <HeaderNavUl>
         {!auth ? 
         (<>
@@ -21,8 +21,8 @@ function Menu() {
           <Item name='Pessoa' url='/pessoa' />
         </>)}
       </HeaderNavUl>
-      {auth && <button onClick={handleLogout}>Sair</button>}
-    </nav>
+      {auth && <HeaderNavButton onClick={handleLogout}>Sair</HeaderNavButton>}
+    </HeaderNav>
     
   )
 }
