@@ -62,11 +62,11 @@ function Address() {
       alert('cep invalido')
       return;
     } 
-    const cep = value.replace('-', '')
-    console.log(cep)
+    const cepNovo = value.replace('-', '')
+    console.log(cepNovo)
 
     try{
-      const {data} = await apiCep.get(`/${(cep)}/json/`)
+      const {data} = await apiCep.get(`/${(cepNovo)}/json/`)
       console.log(data)
       setFieldValue('logradouro', data.logradouro)
       setFieldValue('cidade', data.localidade)
@@ -92,6 +92,7 @@ function Address() {
         }}
         onSubmit={(values, actions) => {
           console.log(values)
+          values.cep = values.cep.replace('-', '')
           !isUpdate ? handleCreateAddress(values) : handleUpdateAddress(values)
         }}
       >
@@ -99,7 +100,17 @@ function Address() {
         <Form>
           <div>
             <label htmlFor="cep">CEP</label>
-            <IMaskInput mask="00000-000" placeholder="Digite o seu CEP" onBlur={(ev) => onBlurCep(ev, setFieldValue)}/>
+            <Field
+                name="cep"
+                render= {({field}) => (
+                  <IMaskInput
+                  {...field}
+                  id="cep" 
+                  mask="00000-000"
+                  onBlur={(ev) => {onBlurCep(setFieldValue, ev.target.value)}}
+                  /> 
+                  )}
+                />
           </div>
           <div>
             <label htmlFor="tipo">Tipo</label>
