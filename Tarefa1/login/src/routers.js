@@ -23,6 +23,7 @@ function Routers() {
           <Route path='/criar-pessoa' element={<PeopleForm />} />
           <Route path='/editar-pessoa/:id' element={<PeopleForm />} />
           <Route path='/detalhe-pessoa/:id' element={<PeopleDetail />} />
+          <Route path='/editar-endereco/:id/:idEndereco' element={<Address />} />
           </>)
         }
       </Routes>

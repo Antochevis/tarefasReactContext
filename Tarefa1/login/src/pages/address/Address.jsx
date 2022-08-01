@@ -14,14 +14,13 @@ function Address() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if(!token) {
+    if (!token) {
       navigate('/')
     }
   }, [])
 
-
   const setup = async () => {
-    if( id && idEndereco) {
+    if (id && idEndereco) {
       setIsUpdate(true)
       try {
         const { data } = await apiDbc.get(`/endereco/${idEndereco}`)
@@ -29,12 +28,12 @@ function Address() {
       } catch (error) {
         console.log(error)
       }
-  }
+    }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     setup()
-  },[])
+  }, [])
 
   async function handleCreateAddress(values) {
     try {
@@ -57,16 +56,16 @@ function Address() {
   }
 
   async function onBlurCep(ev, setFieldValue) {
-    const {value} = ev.target
-    if(value?.length !== 9) {
+    const { value } = ev.target
+    if (value?.length !== 9) {
       alert('cep invalido')
       return;
-    } 
+    }
     const cepNovo = value.replace('-', '')
     console.log(cepNovo)
 
-    try{
-      const {data} = await apiCep.get(`/${(cepNovo)}/json/`)
+    try {
+      const { data } = await apiCep.get(`/${(cepNovo)}/json/`)
       console.log(data)
       setFieldValue('logradouro', data.logradouro)
       setFieldValue('cidade', data.localidade)
@@ -76,6 +75,7 @@ function Address() {
     }
   }
 
+  if((isUpdate && endereco) || !isUpdate) {
   return (
     <ContainerCpf>
       <Formik
@@ -96,60 +96,61 @@ function Address() {
           !isUpdate ? handleCreateAddress(values) : handleUpdateAddress(values)
         }}
       >
-      {({setFieldValue}) => (
-        <Form>
-          <div>
-            <label htmlFor="cep">CEP</label>
-            <Field
+        {({ setFieldValue }) => (
+          <Form>
+            <div>
+              <label htmlFor="cep">CEP</label>
+              <Field
                 name="cep"
-                render= {({field}) => (
+                render={({ field }) => (
                   <IMaskInput
-                  {...field}
-                  id="cep" 
-                  mask="00000-000"
-                  onBlur={(ev) => {onBlurCep(setFieldValue, ev.target.value)}}
-                  /> 
-                  )}
-                />
-          </div>
-          <div>
-            <label htmlFor="tipo">Tipo</label>
-            <Field name='tipo' component="select">
-              <option value=""></option>
-              <option value="RESIDENCIAL">Residencial</option>
-              <option value="COMERCIAL">Comercial</option>
-            </Field>
-          </div>
-          <div>
-            <label htmlFor="logradouro">Rua</label>
-            <Field placeholder="Digite sua rua" name='logradouro' />
-          </div>
-          <div>
-            <label htmlFor="numero">Número</label>
-            <Field type='number' placeholder="Digite o número" name='numero' />
-          </div>
-          <div>
-            <label htmlFor="cidade">Cidade</label>
-            <Field placeholder="Digite a sua cidade" name='cidade' />
-          </div>
-          <div>
-            <label htmlFor='estado'>Estado</label>
-            <Field placeholder="Digite o seu estado" name='estado' />
-          </div>
-          <div>
-            <label htmlFor='pais'>País</label>
-            <Field name='pais' placeholder="Digite o seu país"/>
-          </div>
-          <div>
-            <label htmlFor='complemento'>Complemento</label>
-            <Field name='complemento' placeholder="Digite o seu complemento"/>
-          </div>
-          <AddAddressButton type='submit'>{isUpdate ? 'Atualizar endereço' : 'Cadastrar endereço'}</AddAddressButton>
-        </Form>
-      )}
+                    {...field}
+                    id="cep"
+                    mask="00000-000"
+                    onBlur={(ev) => { onBlurCep(setFieldValue, ev.target.value) }}
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <label htmlFor="tipo">Tipo</label>
+              <Field name='tipo' component="select">
+                <option value=""></option>
+                <option value="RESIDENCIAL">Residencial</option>
+                <option value="COMERCIAL">Comercial</option>
+              </Field>
+            </div>
+            <div>
+              <label htmlFor="logradouro">Rua</label>
+              <Field placeholder="Digite sua rua" name='logradouro' />
+            </div>
+            <div>
+              <label htmlFor="numero">Número</label>
+              <Field type='number' placeholder="Digite o número" name='numero' />
+            </div>
+            <div>
+              <label htmlFor="cidade">Cidade</label>
+              <Field placeholder="Digite a sua cidade" name='cidade' />
+            </div>
+            <div>
+              <label htmlFor='estado'>Estado</label>
+              <Field placeholder="Digite o seu estado" name='estado' />
+            </div>
+            <div>
+              <label htmlFor='pais'>País</label>
+              <Field name='pais' placeholder="Digite o seu país" />
+            </div>
+            <div>
+              <label htmlFor='complemento'>Complemento</label>
+              <Field name='complemento' placeholder="Digite o seu complemento" />
+            </div>
+            <AddAddressButton type='submit'>{isUpdate ? 'Atualizar endereço' : 'Cadastrar endereço'}</AddAddressButton>
+          </Form>
+        )}
       </Formik>
     </ContainerCpf>
   )
+  }
 }
 
 export default Address

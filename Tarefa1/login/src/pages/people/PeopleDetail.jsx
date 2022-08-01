@@ -50,8 +50,8 @@ function PeopleDetail() {
     }
   } 
 
-  async function goAddress() {
-    navigate('/usuario')
+  async function goAddress(idEndereco) {
+    navigate(`/editar-endereco/${id}/${idEndereco}`)
   }
 
   
@@ -88,7 +88,7 @@ function PeopleDetail() {
               <p>{item.pais}</p>
               <p>{item.complemento}</p>
               <div>
-                <ButtonUpdateAddress>Editar</ButtonUpdateAddress>
+                <ButtonUpdateAddress onClick={() => goAddress(item.idEndereco)}>Editar</ButtonUpdateAddress>
                 <ButtonRemoveAddress onClick={() => {handleDeleteAddres(item.idEndereco)}}>Excluir</ButtonRemoveAddress>
               </div>
             </InfosAddressApi>
