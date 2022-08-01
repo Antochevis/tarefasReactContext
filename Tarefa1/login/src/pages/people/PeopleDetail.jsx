@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { PeopleContext } from "../../context/PeopleContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { ButtonsDetailsPerson, ContainerDetailPerson, DetailPerson, InfosAddress, InfosAddressApi, UserItens } from "./People.Styled";
+import { ButtonRemoveAddress, ButtonsDetailsPerson, ButtonUpdateAddress, ContainerDetailPerson, DetailPerson, InfosAddress, InfosAddressApi, UserItens } from "./People.Styled";
 import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
 import { apiDbc } from "../../services/api";
 import { CepDetailPeople } from "../../utils/Formatting";
@@ -11,6 +11,7 @@ function PeopleDetail() {
   const {id} = useParams();
   const navigate = useNavigate()
   const [address, setAddress] = useState([]);
+  const { idEndereco } = useParams();
 
   async function getAddress(idPessoa) {
     try {
@@ -38,6 +39,21 @@ function PeopleDetail() {
   async function backToPeople() {
     navigate(`/pessoa`)
   }
+
+  async function handleDeleteAddres(idEndereco) {
+    try {
+      await apiDbc.delete(`endereco/${idEndereco}`)
+      alert('Endereço excluído com sucesso')
+      navigate('/pessoa')
+    } catch (error) {
+      alert (error)
+    }
+  } 
+
+  async function goAddress() {
+    navigate('/usuario')
+  }
+
   
   return (
     <ContainerDetailPerson>
@@ -59,6 +75,7 @@ function PeopleDetail() {
             <p>Estado</p>
             <p>País</p>
             <p>Complemento</p>
+            <p>Ações</p>
           </InfosAddress>
           {address.map(item => (
             <InfosAddressApi key={item.idPessoa}>
@@ -70,6 +87,10 @@ function PeopleDetail() {
               <p>{item.estado}</p>
               <p>{item.pais}</p>
               <p>{item.complemento}</p>
+              <div>
+                <ButtonUpdateAddress>Editar</ButtonUpdateAddress>
+                <ButtonRemoveAddress onClick={() => {handleDeleteAddres(item.idEndereco)}}>Excluir</ButtonRemoveAddress>
+              </div>
             </InfosAddressApi>
           ))}
           <ButtonsDetailsPerson>

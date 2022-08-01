@@ -267,14 +267,73 @@ export const ButtonsDetailsPerson = styled.div`
 export const InfosAddress = styled.div`
   width: 1100px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid #DFE0EB;
 `
 
 export const InfosAddressApi = styled.div`
   width: 1100px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid #DFE0EB;
   align-items: center;
+
+  > div {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+`
+
+export const ButtonRemoveAddress = styled.div`
+  background: #F12B2C;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  width: 75px;
+  height: 24px;
+
+  &:hover {
+    background: #FFFFFF;
+    color: #F12B2C;
+    border: 1px solid #F12B2C;
+    cursor: pointer;
+    width: 73px;
+    height: 22px;
+  }
+`
+
+export const ButtonUpdateAddress = styled.div`
+  background: #FEC400;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  width: 75px;
+  height: 24px;
+
+  &:hover {
+    background: #FFFFFF;
+    color: #FEC400;
+    border: 1px solid #FEC400;
+    cursor: pointer;
+    width: 73px;
+    height: 22px;
+  }
 `
