@@ -1,17 +1,17 @@
-import { apiDbc } from "../../api"
+import { apiDbc } from '../../services/api'
 import { useNavigate } from "react-router-dom"
-import Modal from "react-modal"
 import { useState, useEffect } from "react"
+import { ButtonDetails, ButtonRemove, ButtonUpdate, ContainerFlatList } from './FlatList.Styled';
+import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
 
 
 function FlatList({list}) {
-  //const [modalIsOpen, setModalIsOpen] = useState(false)
   const [pessoas, setPessoas] = useState([]);
   const navigate = useNavigate()
 
   const setup = async () => {
     try {
-      const { data } = await apiDbc.get("/pessoa?pagina=0&tamanhoDasPaginas=20");
+      const { data } = await apiDbc.get("/pessoa?pagina=0&tamanhoDasPaginas=100");
       setPessoas(data.content);
       console.log(data.content)
     } catch (error) {
@@ -27,6 +27,10 @@ function FlatList({list}) {
     navigate(`/editar-pessoa/${idPessoa}`)
   }
 
+  async function handleDetail(idPessoa) {
+    navigate(`/detalhe-pessoa/${idPessoa}`)
+  }
+
   async function handleDelete(idPessoa) {
     try {
       await apiDbc.delete(`/pessoa/${idPessoa}`)
@@ -37,28 +41,20 @@ function FlatList({list}) {
     }
   }
 
-  /*
-  function handleOpenModal() {
-    setModalIsOpen(true)
-  }
-
-  function handleCloseModal() {
-    setModalIsOpen(false)
-  }
-  */
-  
-
   return (
     <>
     {pessoas.map(item => (
-      <div key={item.idPessoas}>
-        <p>Nome: {item.nome}</p>
-        <p>Data de Nascimento: {item.dataNascimento}</p>
-        <p>CPF: {item.cpf}</p>
-        <p>E-mail: {item.email}</p>
-        <button onClick={() => handleUpdate(item.idPessoa)}>Editar</button> 
-        <button onClick={() => handleDelete(item.idPessoa)}>Apagar</button>
-      </div>
+      <ContainerFlatList key={item.idPessoas}>
+        <p>{item.nome}</p>
+        <p>{FormatDateUsaToBr(item.dataNascimento)}</p>
+        <p>{CpfFlatList(item.cpf)}</p>
+        <p>{item.email}</p>
+        <div>
+          <ButtonDetails onClick={() => handleDetail(item.idPessoa)}>Details</ButtonDetails>
+          <ButtonUpdate onClick={() => handleUpdate(item.idPessoa)}>Update</ButtonUpdate> 
+          <ButtonRemove onClick={() => handleDelete(item.idPessoa)}>Remove</ButtonRemove>
+        </div>
+      </ContainerFlatList>
     ))}
     </>
   )

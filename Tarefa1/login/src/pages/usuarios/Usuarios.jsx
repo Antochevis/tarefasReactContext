@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Field, Form, Formik } from 'formik';
 import * as yup from "yup";
-import { RegisterButtonFormStyle, RegisterContainer, RegisterFormStyle, RegisterTitle } from './Usuarios.Styled';
+import { Logo } from "../../components/logo/Logo";
+import { BackgroundRegister, RegisterButtonFormStyle, RegisterContainer, RegisterFormStyle, RegisterButtonVoltar, LogoAndTextRegister, RegisterTitle, Errors } from './Usuarios.Styled';
+import { useNavigate } from 'react-router-dom';
 
 const SignupSchema = yup.object().shape({
   login: yup.string()
@@ -28,38 +30,51 @@ function Usuarios() {
   */
  
   const { handleSignUp } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  function BackLogin() {
+    navigate('/')
+  }
 
   return (
-    <RegisterContainer>
-      <RegisterTitle>Cadastre sua conta</RegisterTitle>
-
-      <Formik
-        initialValues={{
-          login:'',
-          senha:''
-        }}
-        validationSchema={SignupSchema}
-        onSubmit={values => {
-          handleSignUp(values);
-        }}
-      >
-      {() => (
-        <Form>
-          <RegisterFormStyle>
-            <div>
-              <label htmlFor="login">Nome: </label>
-              <Field name='login' />
-            </div>
-            <div>
-              <label htmlFor="senha">Senha: </label>
-              <Field type='password' name='senha' />
-            </div>
-          <RegisterButtonFormStyle type='submit'>Cadastrar</RegisterButtonFormStyle>
-          </RegisterFormStyle>
-        </Form>
-      )}
-      </Formik>
-    </RegisterContainer>
+    <BackgroundRegister>
+      <RegisterContainer>
+        <LogoAndTextRegister>
+          <Logo />
+          <h2>Dashboard Kit</h2>
+          <RegisterTitle>Register New User</RegisterTitle>
+        </LogoAndTextRegister>
+        <Formik
+          initialValues={{
+            login:'',
+            senha:''
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={values => {
+            handleSignUp(values);
+          }}
+        >
+        {({errors, touched}) => (
+          <Form>
+            <RegisterFormStyle>
+              <div>
+                <label htmlFor="login">Login: </label>
+                <Field name='login' placeholder='Username' />
+                {errors.login && touched.login ? (<Errors>{errors.login}</Errors>) : null}
+              </div>
+              <div>
+                <label htmlFor="senha">Password: </label>
+                <Field type='password' name='senha' placeholder='Password'/>
+                {errors.senha && touched.senha ? (<Errors>{errors.senha}</Errors>) : null}
+              </div>
+            <RegisterButtonFormStyle type='submit'>Register</RegisterButtonFormStyle>
+            <RegisterButtonVoltar onClick={BackLogin} type='submit'>Back</RegisterButtonVoltar>
+            </RegisterFormStyle>
+          </Form>
+        )}
+        </Formik>
+      </RegisterContainer>
+    </BackgroundRegister>
   )
 }
 

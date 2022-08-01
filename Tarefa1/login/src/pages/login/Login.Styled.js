@@ -75,12 +75,17 @@ export const LoginContainer = styled.div`
 export const Signup = styled.small`
   color: #3751FF;
   font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `
 
 export const FormStyle = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 48px;
+  margin-top: 30px;
   gap: 24px;
 
   div {
@@ -88,14 +93,24 @@ export const FormStyle = styled.div`
     flex-direction: column;
     width: 316px;
     gap: 6px;
+    height: 70px;
 
-    label{
+    label {
       font-size: 12px;
       line-height: 15px;
       letter-spacing: 0.3px;
       text-transform: uppercase;
       color: #9FA2B4;
     }
+
+    input {
+      background: #FCFDFE;
+      border: 1px solid #F0F1F7;
+      border-radius: 8px;
+      height: 42px;
+      padding: 11px 16px;
+      color: #4B506D;
+    };
   }
 `
 
@@ -110,5 +125,19 @@ export const ButtonFormStyle = styled.button`
   text-align: center;
   letter-spacing: 0.2px;
   color: #FFFFFF;
-  margin-top: 24px;
+  margin-top: 18px;
+
+  &:hover {
+    background: #FFFFFF;
+    color: #3751FF;
+    border: 1px solid #3751FF;
+    cursor: pointer;
+  }
+`
+
+export const Errors = styled.p`
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 0;
 `

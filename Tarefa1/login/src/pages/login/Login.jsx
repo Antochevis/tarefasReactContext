@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { Logo } from "../../components/logo/Logo";
 import { AuthContext } from "../../context/AuthContext";
-import { BackgroundPage, ButtonFormStyle, FormStyle, LoginContainer, LogoAndText, Signup, Title } from "./Login.Styled";
+import { BackgroundPage, ButtonFormStyle, Errors, FormStyle, LoginContainer, LogoAndText, Signup, Title } from "./Login.Styled";
+import { useNavigate } from "react-router-dom";
 
 const SignupSchema = yup.object().shape({
   login: yup.string()
@@ -19,6 +20,13 @@ const SignupSchema = yup.object().shape({
 
 const Login = () => {
   const {handleLogin} = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  function GoToRegister(){
+    navigate('/usuarios')
+  }
+
+
   return (
     <BackgroundPage>
       <LoginContainer>
@@ -44,12 +52,12 @@ const Login = () => {
               <div>
                 <label htmlFor="login">Login: </label>
                 <Field name='login' placeholder='Username' />
-                {errors.login && touched.login ? (<div>{errors.login}</div>) : null}
+                {errors.login && touched.login ? (<Errors>{errors.login}</Errors>) : null}
               </div>
               <div>
                 <label htmlFor="senha">Password: </label>
                 <Field type='password' name='senha' placeholder='Password'/>
-                {errors.senha && touched.senha ? (<div>{errors.senha}</div>) : null}
+                {errors.senha && touched.senha ? (<Errors>{errors.senha}</Errors>) : null}
               </div>
               <ButtonFormStyle type="submit">Log In</ButtonFormStyle>
             </FormStyle>
@@ -58,7 +66,7 @@ const Login = () => {
         </Formik>
         <div>
           <p>Don’t have an account?</p>
-          <Link to="/usuarios" ><Signup>Sign up</Signup></Link>
+          <Signup onClick={GoToRegister}>Sign up</Signup>
         </div>
       </LoginContainer>
     </BackgroundPage>

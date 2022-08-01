@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { apiDbc } from "../api";
+import { apiDbc } from "../services/api";
 
 
 const AuthContext = createContext();
@@ -23,7 +23,7 @@ const AuthProvider = ({children}) => {
       localStorage.setItem('token', data)
       apiDbc.defaults.headers.common['Authorization'] = data
       setAuth(true)
-      window.location.href = '/endereco'
+      window.location.href = '/pessoa'
     } catch (e) {
       alert('deu erro')
     }
