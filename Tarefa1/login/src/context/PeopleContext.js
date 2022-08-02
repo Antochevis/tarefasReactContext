@@ -1,5 +1,7 @@
 import { createContext, useState } from "react";
 import { apiDbc } from "../services/api";
+import { toast } from "react-hot-toast"
+import { useNavigate } from "react-router-dom";
 
 const PeopleContext = createContext();
 
@@ -7,6 +9,7 @@ function PeopleProvider({children}) {
 
   const [pessoas, setPessoas] = useState([]);
   const [pessoa, setPessoa] = useState([]);
+  const navigate = useNavigate()
 
   async function getPessoaById(id) {
     try {
@@ -27,14 +30,13 @@ function PeopleProvider({children}) {
   }
 
   async function handleCreate(values) {
-    console.log('entrei no create')
     try {
       console.log('entrei no try')
       await apiDbc.post(`/pessoa`, values);
-      alert('cadastrado com sucesso')
-      window.location.href = '/pessoa';
+      navigate('/pessoa');
+      toast.success('Pessoa cadastrada')
     } catch (error) {
-      alert(error)
+      toast.error('Deu erro')
     }
   }
 
@@ -54,9 +56,10 @@ function PeopleProvider({children}) {
   async function handleUpdate(values, id) {
     try {
       await apiDbc.put(`/pessoa/${id}`, values)
-      window.location.href = '/pessoa';
+      navigate('/pessoa');
+      toast.success('Pessoa atualizada com sucesso')
     } catch (error) {
-      alert(error)
+      toast.error('Deu erro')
     }
   }
 

@@ -1,16 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import { apiDbc } from "../services/api";
+import { Toaster, toast } from "react-hot-toast"
+import { useNavigate } from "react-router-dom";
 
 
 const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(false)
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    if(token) {
+    if (token) {
       apiDbc.defaults.headers.common['Authorization'] = token
       setAuth(true)
     }
@@ -19,23 +22,24 @@ const AuthProvider = ({children}) => {
 
   async function handleLogin(user) {
     try {
-      const {data} = await apiDbc.post('/auth', user);
+      const { data } = await apiDbc.post('/auth', user);
       localStorage.setItem('token', data)
       apiDbc.defaults.headers.common['Authorization'] = data
       setAuth(true)
-      window.location.href = '/pessoa'
+      navigate('/pessoa')
+      toast.success('Logado com sucesso')
     } catch (e) {
-      alert('deu erro')
+      toast.error('Deu erro')
     }
   }
 
   async function handleSignUp(values) {
     try {
       await apiDbc.post('/auth/create', values)
-      alert('Usuário cadastrado com sucesso')
-      window.location.href = '/'
-    } catch(e) {
-      console.log(e)
+      navigate('/')
+      toast.success('Cadastrado com sucesso')
+    } catch (e) {
+      toast.error('Deu erro')
     }
   }
 
@@ -43,21 +47,23 @@ const AuthProvider = ({children}) => {
     localStorage.removeItem('token')
     apiDbc.defaults.headers.common['Authorization'] = undefined
     setAuth(false)
-    window.location.href = '/'
+    navigate('/')
+    toast.success('Tchau!')
   }
 
-  if(loading) {
-    return(
+  if (loading) {
+    return (
       <h1>Loading</h1>
     )
   }
-  
+
   return (
-    <AuthContext.Provider value={{handleLogin, handleLogout, handleSignUp, auth}}>
+    <AuthContext.Provider value={{ handleLogin, handleLogout, handleSignUp, auth }}>
       {children}
+      <Toaster />
     </AuthContext.Provider>
   )
 
 }
 
-export {AuthContext, AuthProvider}
+export { AuthContext, AuthProvider }

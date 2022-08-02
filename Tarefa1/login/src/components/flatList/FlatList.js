@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { ButtonDetails, ButtonRemove, ButtonUpdate, ContainerFlatList } from './FlatList.Styled';
 import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
+import { toast } from "react-hot-toast"
 
 
 function FlatList({list}) {
@@ -34,10 +35,10 @@ function FlatList({list}) {
   async function handleDelete(idPessoa) {
     try {
       await apiDbc.delete(`/pessoa/${idPessoa}`)
-      alert('Pessoa deletada')
       setup()
+      toast.success('Usuário excluído com sucesso')
     } catch(e) {
-      alert(e)
+      toast.error('Deu erro')
     }
   }
 
