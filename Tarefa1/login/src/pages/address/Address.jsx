@@ -4,6 +4,8 @@ import { apiCep, apiDbc } from '../../services/api';
 import { Formik, Form, Field } from 'formik';
 import { IMaskInput } from "react-imask";
 import { AddAddressButton, ContainerCpf, RequiredFieldsAddress } from './Address.Style';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Address() {
   const { id } = useParams();
@@ -36,19 +38,21 @@ function Address() {
   }, [])
 
   async function handleCreateAddress(values) {
+    const notify = () => toast("Endereço cadastrado com sucesso");
     try {
       await apiDbc.post(`/endereco/{idPessoa}?idPessoa=${id}`, values);
-      alert('endereco cadastrado com sucesso')
       navigate(`/detalhe-pessoa/${id}`)
+      notify()
     } catch (error) {
       alert(error)
     }
   }
 
   async function handleUpdateAddress(values) {
+    const notify = () => toast("Endereço atualizado com sucesso");
     try {
       await apiDbc.put(`/endereco/${idEndereco}`, values)
-      alert('endereco editado com sucesso')
+      notify()
       navigate(`/detalhe-pessoa/${id}`)
     } catch (error) {
       alert(error)
@@ -78,6 +82,7 @@ function Address() {
   if((isUpdate && endereco) || !isUpdate) {
   return (
     <ContainerCpf>
+      <ToastContainer/>
       <Formik
         initialValues={{
           idPessoa: id,

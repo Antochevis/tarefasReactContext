@@ -5,6 +5,8 @@ import { ButtonRemoveAddress, ButtonsDetailsPerson, ButtonUpdateAddress, Contain
 import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
 import { apiDbc } from "../../services/api";
 import { CepDetailPeople } from "../../utils/Formatting";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PeopleDetail() {
   const {getPessoaById, pessoa} = useContext(PeopleContext)
@@ -41,9 +43,10 @@ function PeopleDetail() {
   }
 
   async function handleDeleteAddres(idEndereco) {
+    const notify = () => toast("Endereço excluído com sucesso");
     try {
       await apiDbc.delete(`endereco/${idEndereco}`)
-      alert('Endereço excluído com sucesso')
+      notify()
       navigate(`/detalhe-pessoa/${id}`)
       setup()
     } catch (error) {
@@ -58,6 +61,17 @@ function PeopleDetail() {
   
   return (
     <ContainerDetailPerson>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {pessoa.map(item => (
         <DetailPerson key={item.idPessoa}>
           <p>Nome: {item.nome}</p>
