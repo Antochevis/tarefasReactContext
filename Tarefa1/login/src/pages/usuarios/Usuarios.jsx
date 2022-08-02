@@ -3,7 +3,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { Field, Form, Formik } from 'formik';
 import * as yup from "yup";
 import { Logo } from "../../components/logo/Logo";
-import { BackgroundRegister, RegisterButtonFormStyle, RegisterContainer, RegisterFormStyle, RegisterButtonVoltar, LogoAndTextRegister, RegisterTitle, Errors } from './Usuarios.Styled';
+import { BackgroundRegister, RegisterButtonFormStyle, RegisterContainer, RegisterFormStyle, RegisterButtonVoltar, LogoAndTextRegister, RegisterTitle, Errors, RequiredFields } from './Usuarios.Styled';
 import { useNavigate } from 'react-router-dom';
 
 const SignupSchema = yup.object().shape({
@@ -58,14 +58,17 @@ function Usuarios() {
           <Form>
             <RegisterFormStyle>
               <div>
-                <label htmlFor="login">Login: </label>
-                <Field name='login' placeholder='Username' />
+                <label htmlFor="login">*Login: </label>
+                <Field name='login' placeholder='Username'/>
                 {errors.login && touched.login ? (<Errors>{errors.login}</Errors>) : null}
               </div>
               <div>
-                <label htmlFor="senha">Password: </label>
+                <label htmlFor="senha">*Password: </label>
                 <Field type='password' name='senha' placeholder='Password'/>
                 {errors.senha && touched.senha ? (<Errors>{errors.senha}</Errors>) : null}
+              </div>
+              <div>
+                <RequiredFields>*Campos obrigatórios</RequiredFields>
               </div>
             <RegisterButtonFormStyle type='submit'>Register</RegisterButtonFormStyle>
             <RegisterButtonVoltar onClick={BackLogin} type='submit'>Back</RegisterButtonVoltar>

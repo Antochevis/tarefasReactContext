@@ -50,14 +50,17 @@ const Login = () => {
           <Form>
             <FormStyle>
               <div>
-                <label htmlFor="login">Login: </label>
+                <label htmlFor="login">*Login: </label>
                 <Field name='login' placeholder='Username' />
                 {errors.login && touched.login ? (<Errors>{errors.login}</Errors>) : null}
               </div>
               <div>
-                <label htmlFor="senha">Password: </label>
+                <label htmlFor="senha">*Password: </label>
                 <Field type='password' name='senha' placeholder='Password'/>
                 {errors.senha && touched.senha ? (<Errors>{errors.senha}</Errors>) : null}
+              </div>
+              <div>
+                <p>*Campos Obrigatórios</p>
               </div>
               <ButtonFormStyle type="submit">Log In</ButtonFormStyle>
             </FormStyle>

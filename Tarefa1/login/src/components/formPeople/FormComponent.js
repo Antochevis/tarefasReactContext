@@ -4,7 +4,7 @@ import { OnlyNumbers, FormatDateBrToUsa, FormatDateUsaToBr } from "../../utils/F
 import { useContext } from 'react';
 import { PeopleContext } from '../../context/PeopleContext';
 import MaskedInput from 'react-text-mask';
-import { AddPersonButton, CancelAddPersonButton, ContainerAddForm } from "./FormComponent.Styled";
+import { AddPersonButton, CancelAddPersonButton, ContainerAddForm, RequiredInfosPerson } from "./FormComponent.Styled";
 import { useNavigate } from "react-router-dom";
 
 
@@ -45,7 +45,7 @@ function FormComponent({isUpdate, people, id}) {
       <ContainerAddForm onSubmit={props.handleSubmit}>
         <h1>Cadastrar nova Pessoa</h1>
         <div>
-          <label htmlFor="nome">Nome</label>
+          <label htmlFor="nome">*Nome</label>
           <input
             type="text"
             onChange={props.handleChange}
@@ -53,10 +53,11 @@ function FormComponent({isUpdate, people, id}) {
             value={props.values.nome}
             name="nome"
             placeholder='Nome'
+            required
           />
         </div>
         <div>
-          <label htmlFor="dataNascimento">Data de Nascimento</label>
+          <label htmlFor="dataNascimento">*Data de Nascimento</label>
           <MaskedInput
             mask={maskDate}
             onChange={props.handleChange}
@@ -64,10 +65,11 @@ function FormComponent({isUpdate, people, id}) {
             value={props.values.dataNascimento}
             name="dataNascimento"
             placeholder='Data de Nascimento'
+            required
           />
         </div>
         <div>
-          <label htmlFor="cpf">CPF</label>
+          <label htmlFor="cpf">*CPF</label>
           <MaskedInput
             mask={maskCPF}
             onChange={props.handleChange}
@@ -75,10 +77,11 @@ function FormComponent({isUpdate, people, id}) {
             value={props.values.cpf}
             name="cpf"
             placeholder='CPF'
+            required
           />
         </div>
         <div>
-          <label htmlFor="email">E-mail</label>
+          <label htmlFor="email">*E-mail</label>
           <input
             type="email"
             mask={maskEmail}
@@ -87,9 +90,11 @@ function FormComponent({isUpdate, people, id}) {
             value={props.values.email}
             name="email"
             placeholder='E-mail'
+            required
           />
         </div>
         {props.errors.name && <div id="feedback">{props.errors.name}</div>}
+        <RequiredInfosPerson>*Campos Obrigatórios</RequiredInfosPerson>
         <AddPersonButton type="submit">{isUpdate ? 'Atualizar' : 'Cadastrar'}</AddPersonButton>
         <CancelAddPersonButton onClick={HandleCancel}>Cancelar</CancelAddPersonButton>
       </ContainerAddForm>

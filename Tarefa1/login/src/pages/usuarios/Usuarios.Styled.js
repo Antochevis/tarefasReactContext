@@ -44,10 +44,10 @@ export const RegisterFormStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
   gap: 24px;
 
-  div {
+  div:nth-child(-n + 2) {
     display: flex;
     flex-direction: column;
     width: 316px;
@@ -71,6 +71,13 @@ export const RegisterFormStyle = styled.div`
       color: #4B506D;
     };
   }
+
+  div:nth-child(3){
+    display: flex;
+    flex-direction: column;
+    width: 316px;
+    align-items: flex-start;
+  }
 `
 
 export const RegisterButtonFormStyle = styled.button`
@@ -84,7 +91,6 @@ export const RegisterButtonFormStyle = styled.button`
   text-align: center;
   letter-spacing: 0.2px;
   color: #FFFFFF;
-  margin-top: 18px;
 
   &:hover {
     background: #FFFFFF;
@@ -128,4 +134,13 @@ export const Errors = styled.p`
   font-size: 12px;
   font-weight: bold;
   margin-top: 0;
+`
+
+export const RequiredFields = styled.p`
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #9FA2B4;
+  margin: 0;
 `

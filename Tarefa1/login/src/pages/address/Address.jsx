@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { apiCep, apiDbc } from '../../services/api';
 import { Formik, Form, Field } from 'formik';
 import { IMaskInput } from "react-imask";
-import { AddAddressButton, ContainerCpf } from './Address.Style';
+import { AddAddressButton, ContainerCpf, RequiredFieldsAddress } from './Address.Style';
 
 function Address() {
   const { id } = useParams();
@@ -39,7 +39,7 @@ function Address() {
     try {
       await apiDbc.post(`/endereco/{idPessoa}?idPessoa=${id}`, values);
       alert('endereco cadastrado com sucesso')
-      navigate('/pessoa')
+      navigate(`/detalhe-pessoa/${id}`)
     } catch (error) {
       alert(error)
     }
@@ -49,7 +49,7 @@ function Address() {
     try {
       await apiDbc.put(`/endereco/${idEndereco}`, values)
       alert('endereco editado com sucesso')
-      navigate('/pessoa')
+      navigate(`/detalhe-pessoa/${id}`)
     } catch (error) {
       alert(error)
     }
@@ -99,12 +99,14 @@ function Address() {
         {({ setFieldValue }) => (
           <Form>
             <div>
-              <label htmlFor="cep">CEP</label>
+              <label htmlFor="cep">*CEP</label>
               <Field
                 name="cep"
                 render={({ field }) => (
                   <IMaskInput
-                    {...field}
+                  {...field}
+                    placeholder="Digite seu CEP"
+                    required
                     id="cep"
                     mask="00000-000"
                     onBlur={(ev) => { onBlurCep(setFieldValue, ev.target.value) }}
@@ -113,37 +115,38 @@ function Address() {
               />
             </div>
             <div>
-              <label htmlFor="tipo">Tipo</label>
-              <Field name='tipo' component="select">
+              <label htmlFor="tipo">*Tipo</label>
+              <Field name='tipo' component="select" required>
                 <option value=""></option>
                 <option value="RESIDENCIAL">Residencial</option>
                 <option value="COMERCIAL">Comercial</option>
               </Field>
             </div>
             <div>
-              <label htmlFor="logradouro">Rua</label>
-              <Field placeholder="Digite sua rua" name='logradouro' />
+              <label htmlFor="logradouro">*Rua</label>
+              <Field placeholder="Digite sua rua" name='logradouro' required/>
             </div>
             <div>
-              <label htmlFor="numero">Número</label>
-              <Field type='number' placeholder="Digite o número" name='numero' />
+              <label htmlFor="numero">*Número</label>
+              <Field type='number' placeholder="Digite o número" name='numero' required/>
             </div>
             <div>
-              <label htmlFor="cidade">Cidade</label>
-              <Field placeholder="Digite a sua cidade" name='cidade' />
+              <label htmlFor="cidade">*Cidade</label>
+              <Field placeholder="Digite a sua cidade" name='cidade' required/>
             </div>
             <div>
-              <label htmlFor='estado'>Estado</label>
-              <Field placeholder="Digite o seu estado" name='estado' />
+              <label htmlFor='estado'>*Estado</label>
+              <Field placeholder="Digite o seu estado" name='estado' required/>
             </div>
             <div>
-              <label htmlFor='pais'>País</label>
-              <Field name='pais' placeholder="Digite o seu país" />
+              <label htmlFor='pais'>*País</label>
+              <Field name='pais' placeholder="Digite o seu país" required/>
             </div>
             <div>
-              <label htmlFor='complemento'>Complemento</label>
-              <Field name='complemento' placeholder="Digite o seu complemento" />
+              <label htmlFor='complemento'>*Complemento</label>
+              <Field name='complemento' placeholder="Digite o seu complemento" required/>
             </div>
+            <RequiredFieldsAddress>*Campos Obrigatórios</RequiredFieldsAddress>
             <AddAddressButton type='submit'>{isUpdate ? 'Atualizar endereço' : 'Cadastrar endereço'}</AddAddressButton>
           </Form>
         )}

@@ -20,7 +20,7 @@ export const ContainerCpf = styled.div`
     align-items: center;
 
     > div {
-      width: 360px;
+      width: 316px;
       display: flex;
       flex-direction: column;
       margin: 10px 10px;
@@ -70,6 +70,7 @@ export const AddAddressButton = styled.button`
   text-align: center;
   letter-spacing: 0.2px;
   margin-bottom: 20px;
+  margin-top: 15px;
 
   &:hover {
     background: #FFFFFF;
@@ -77,4 +78,15 @@ export const AddAddressButton = styled.button`
     border: 1px solid #3751FF;
     cursor: pointer;
   }
+`
+
+export const RequiredFieldsAddress = styled.p`
+  margin: 0;
+  width: 316px;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #9FA2B4;
+  margin: 0;
 `

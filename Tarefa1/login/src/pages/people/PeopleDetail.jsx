@@ -44,7 +44,8 @@ function PeopleDetail() {
     try {
       await apiDbc.delete(`endereco/${idEndereco}`)
       alert('Endereço excluído com sucesso')
-      navigate('/pessoa')
+      navigate(`/detalhe-pessoa/${id}`)
+      setup()
     } catch (error) {
       alert (error)
     }
@@ -57,7 +58,6 @@ function PeopleDetail() {
   
   return (
     <ContainerDetailPerson>
-      <aside></aside>
       {pessoa.map(item => (
         <DetailPerson key={item.idPessoa}>
           <p>Nome: {item.nome}</p>
@@ -77,7 +77,8 @@ function PeopleDetail() {
             <p>Complemento</p>
             <p>Ações</p>
           </InfosAddress>
-          {address.map(item => (
+          {address.length > 0 ?
+          address.map(item => (
             <InfosAddressApi key={item.idPessoa}>
               <p>{CepDetailPeople(item.cep)}</p>
               <p>{item.tipo}</p>
@@ -92,7 +93,7 @@ function PeopleDetail() {
                 <ButtonRemoveAddress onClick={() => {handleDeleteAddres(item.idEndereco)}}>Excluir</ButtonRemoveAddress>
               </div>
             </InfosAddressApi>
-          ))}
+          )) : <h1>Ainda não há endereços cadastrados</h1> }
           <ButtonsDetailsPerson>
             <button onClick={backToPeople}>Voltar</button>
             <button onClick={handleAddress}>Cadastrar Endereço</button>

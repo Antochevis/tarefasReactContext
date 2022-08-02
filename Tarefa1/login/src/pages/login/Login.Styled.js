@@ -59,7 +59,7 @@ export const LoginContainer = styled.div`
   > div {
     display: flex;
     gap: 5px;
-    margin-top: 32px;
+    margin-top: 20px;
     align-items: center;
 
     > p {
@@ -88,7 +88,7 @@ export const FormStyle = styled.div`
   margin-top: 30px;
   gap: 24px;
 
-  div {
+  div:nth-child(-n + 2) {
     display: flex;
     flex-direction: column;
     width: 316px;
@@ -112,6 +112,23 @@ export const FormStyle = styled.div`
       color: #4B506D;
     };
   }
+  
+  div:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    width: 316px;
+    align-items: flex-start;
+
+    > p {
+      font-size: 12px;
+      line-height: 15px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: #9FA2B4;
+      margin: 0;
+    }
+  }
+
 `
 
 export const ButtonFormStyle = styled.button`

@@ -51,6 +51,17 @@ export const ContainerAddForm = styled.form`
   }
 `
 
+export const RequiredInfosPerson = styled.p`
+  margin: 0;
+  width: 316px;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #9FA2B4;
+  margin: 0;
+`
+
 export const AddPersonButton = styled.button`
   width: 316px;
   height: 48px;
@@ -64,6 +75,7 @@ export const AddPersonButton = styled.button`
   line-height: 20px;
   text-align: center;
   letter-spacing: 0.2px;
+  margin-top: 25px;
 
   &:hover {
     background: #FFFFFF;
