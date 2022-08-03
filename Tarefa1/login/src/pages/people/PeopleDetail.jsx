@@ -6,13 +6,15 @@ import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
 import { apiDbc } from "../../services/api";
 import { CepDetailPeople } from "../../utils/Formatting";
 import { toast } from "react-hot-toast"
+import ModalDelete from "../../components/modal/ModalDelete";
 
 function PeopleDetail() {
   const {getPessoaById, pessoa} = useContext(PeopleContext)
   const {id} = useParams();
   const navigate = useNavigate()
   const [address, setAddress] = useState([]);
-  const [contact, setContact] = useState([])
+  const [contact, setContact] = useState([]);
+  const [isOpen, setIsOpen] = useState(false)
 
   async function getContact(idPessoa) {
     try {
@@ -83,7 +85,11 @@ function PeopleDetail() {
     navigate(`/editar-contato/${id}/${idContato}`)
   }
 
-  
+  function handleOpenModal() {
+    setIsOpen(true)
+  }
+
+
   return (
     <ContainerDetailPerson>
       {pessoa.map(item => (
@@ -118,8 +124,9 @@ function PeopleDetail() {
               <p>{item.complemento}</p>
               <div>
                 <ButtonUpdate onClick={() => goAddress(item.idEndereco)}>Editar</ButtonUpdate>
-                <ButtonRemove onClick={() => {handleDeleteAddress(item.idEndereco)}}>Excluir</ButtonRemove>
+                <ButtonRemove onClick={handleOpenModal}>Excluir</ButtonRemove>
               </div>
+              <ModalDelete deleteModal={handleDeleteAddress} isOpen={isOpen} setIsOpen={setIsOpen} idDelete={item.idEndereco} />
             </InfosAddressApi>
           )) : <NoInfos>Ainda não há endereços cadastrados</NoInfos> }
           <ButtonsDetailsPersonAddress>
@@ -139,7 +146,8 @@ function PeopleDetail() {
               <p>{item.descricao}</p>
               <div>
                 <ButtonUpdate onClick={() => goContact(item.idContato)}>Editar</ButtonUpdate>
-                <ButtonRemove onClick={() => {handleDeleteContact(item.idContato)}}>Excluir</ButtonRemove>
+                <ButtonRemove onClick={handleOpenModal}>Excluir</ButtonRemove>
+                <ModalDelete deleteModal={handleDeleteContact} isOpen={isOpen} setIsOpen={setIsOpen} idDelete={item.idContato} />
               </div>
             </InfosContatcApi>
           )) : <NoInfos>Ainda não há contatos cadastrados</NoInfos> }
