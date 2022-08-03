@@ -59,7 +59,7 @@ function Address() {
   async function onBlurCep(ev, setFieldValue) {
     const { value } = ev.target
     if (value?.length !== 9) {
-      alert('cep invalido')
+      toast.error('Cep inválido')
       return;
     }
     const cepNovo = value.replace('-', '')
@@ -144,8 +144,8 @@ function Address() {
               <Field name='pais' placeholder="Digite o seu país" required/>
             </div>
             <div>
-              <label htmlFor='complemento'>*Complemento</label>
-              <Field name='complemento' placeholder="Digite o seu complemento" required/>
+              <label htmlFor='complemento'>Complemento</label>
+              <Field name='complemento' placeholder="Digite o seu complemento"/>
             </div>
             <RequiredFieldsAddress>*Campos Obrigatórios</RequiredFieldsAddress>
             <AddAddressButton type='submit'>{isUpdate ? 'Atualizar endereço' : 'Cadastrar endereço'}</AddAddressButton>

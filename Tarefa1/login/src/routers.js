@@ -10,6 +10,7 @@ import PeopleDetail from "./pages/people/PeopleDetail";
 import { Outlet, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { PeopleProvider } from "./context/PeopleContext";
+import Contact from "./pages/contact/Contact";
 
 
 const PrivateRoute = () => {
@@ -35,6 +36,8 @@ const Routers = () => {
             <Route path='/editar-pessoa/:id' element={<PeopleForm />} />
             <Route path='/detalhe-pessoa/:id' element={<PeopleDetail />} />
             <Route path='/editar-endereco/:id/:idEndereco' element={<Address />} />
+            <Route path='/contato/:id' element={<Contact />} />
+            <Route path='/editar-contato/:id/:idContato' element={<Contact />} />
           </Route>
         </Routes>
         </PeopleProvider>

@@ -200,7 +200,7 @@ export const FormContainer = styled.div`
 export const ContainerDetailPerson = styled.div`
   background-color: #363740;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,12 +210,12 @@ export const ContainerDetailPerson = styled.div`
 export const DetailPerson = styled.div`
   background-color: #F7F8FC;
   width: 1122px;
-  min-height: 582px;
   border: 1px solid #DFE0EB;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 30px 0;
 
   > p {
     font-weight: 700;
@@ -238,6 +238,7 @@ export const UserItens = styled.div`
 export const ButtonsDetailsPerson = styled.div`
   display: flex;
   gap: 700px;
+  margin-bottom: 20px;
 
   > button {
     height: 48px;
@@ -253,7 +254,7 @@ export const ButtonsDetailsPerson = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 20px;
 
     &:hover {
       background: #FFFFFF;
@@ -286,7 +287,7 @@ export const InfosAddressApi = styled.div`
   }
 `
 
-export const ButtonRemoveAddress = styled.div`
+export const ButtonRemove = styled.div`
   background: #F12B2C;
   border-radius: 100px;
   font-weight: 700;
@@ -312,7 +313,7 @@ export const ButtonRemoveAddress = styled.div`
   }
 `
 
-export const ButtonUpdateAddress = styled.div`
+export const ButtonUpdate = styled.div`
   background: #FEC400;
   border-radius: 100px;
   font-weight: 700;
@@ -336,4 +337,64 @@ export const ButtonUpdateAddress = styled.div`
     width: 73px;
     height: 22px;
   }
+`
+
+export const InfosContact = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr 1fr;
+  width: 1100px;
+  border-bottom: 1px solid #DFE0EB;
+  align-items: center;
+  margin-top: 20px;
+`
+
+export const InfosContatcApi = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr 1fr;
+  width: 1100px;
+  border-bottom: 1px solid #DFE0EB;
+  align-items: center;
+
+  > div {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+`
+
+export const ButtonsDetailsPersonAddress = styled.div`
+  display: flex;
+  gap: 700px;
+  margin-bottom: 20px;
+  width: 1000px;
+  justify-content: flex-end;
+
+  > button {
+    height: 48px;
+    width: 150px;
+    background: #3751FF;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    &:hover {
+      background: #FFFFFF;
+      color: #3751FF;
+      border: 1px solid #3751FF;
+      cursor: pointer;
+    }
+  }
+`
+
+export const NoInfos = styled.h1`
+  margin-bottom: 0;
 `

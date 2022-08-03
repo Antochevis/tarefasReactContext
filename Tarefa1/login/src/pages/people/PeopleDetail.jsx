@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { PeopleContext } from "../../context/PeopleContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { ButtonRemoveAddress, ButtonsDetailsPerson, ButtonUpdateAddress, ContainerDetailPerson, DetailPerson, InfosAddress, InfosAddressApi, UserItens } from "./People.Styled";
+import { ButtonRemove, ButtonsDetailsPerson, ButtonsDetailsPersonAddress, ButtonUpdate, ContainerDetailPerson, DetailPerson, InfosAddress, InfosAddressApi, InfosContact, InfosContatcApi, NoInfos, UserItens } from "./People.Styled";
 import { FormatDateUsaToBr, CpfFlatList } from "../../utils/Formatting";
 import { apiDbc } from "../../services/api";
 import { CepDetailPeople } from "../../utils/Formatting";
@@ -12,7 +12,16 @@ function PeopleDetail() {
   const {id} = useParams();
   const navigate = useNavigate()
   const [address, setAddress] = useState([]);
-  const { idEndereco } = useParams();
+  const [contact, setContact] = useState([])
+
+  async function getContact(idPessoa) {
+    try {
+      const {data} = await apiDbc.get(`contato/${idPessoa}`)
+      setContact(data)
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   async function getAddress(idPessoa) {
     try {
@@ -20,13 +29,14 @@ function PeopleDetail() {
       console.log(data)
       setAddress(data)
     } catch (error) {
-      alert (error)
+      alert(error)
     }
   }
 
   async function setup() {
     getPessoaById(id)
     getAddress(id)
+    getContact(id)
   }
   
   useEffect(() => {
@@ -37,11 +47,15 @@ function PeopleDetail() {
     navigate(`/endereco/${id}`)
   }
 
+  async function handleContact() {
+    navigate(`/contato/${id}`)
+  }
+
   async function backToPeople() {
     navigate(`/pessoa`)
   }
 
-  async function handleDeleteAddres(idEndereco) {
+  async function handleDeleteAddress(idEndereco) {
     try {
       await apiDbc.delete(`endereco/${idEndereco}`)
       setup()
@@ -49,10 +63,24 @@ function PeopleDetail() {
     } catch (error) {
       toast.error('Deu erro')
     }
-  } 
+  }
+
+  async function handleDeleteContact(idContato) {
+    try {
+      await apiDbc.delete(`contato/${idContato}`)
+      setup()
+      toast.success('Contato excluído com sucesso')
+    } catch (error) {
+      toast.error('Deu erro')
+    }
+  }
 
   async function goAddress(idEndereco) {
     navigate(`/editar-endereco/${id}/${idEndereco}`)
+  }
+
+  async function goContact(idContato) {
+    navigate(`/editar-contato/${id}/${idContato}`)
   }
 
   
@@ -89,15 +117,37 @@ function PeopleDetail() {
               <p>{item.pais}</p>
               <p>{item.complemento}</p>
               <div>
-                <ButtonUpdateAddress onClick={() => goAddress(item.idEndereco)}>Editar</ButtonUpdateAddress>
-                <ButtonRemoveAddress onClick={() => {handleDeleteAddres(item.idEndereco)}}>Excluir</ButtonRemoveAddress>
+                <ButtonUpdate onClick={() => goAddress(item.idEndereco)}>Editar</ButtonUpdate>
+                <ButtonRemove onClick={() => {handleDeleteAddress(item.idEndereco)}}>Excluir</ButtonRemove>
               </div>
             </InfosAddressApi>
-          )) : <h1>Ainda não há endereços cadastrados</h1> }
+          )) : <NoInfos>Ainda não há endereços cadastrados</NoInfos> }
+          <ButtonsDetailsPersonAddress>
+            <button onClick={handleAddress}>Cadastrar Endereço</button>
+          </ButtonsDetailsPersonAddress>
+          <InfosContact>
+            <p>Tipo</p>
+            <p>Telefone</p>
+            <p>Descrição</p>
+            <p>Ações</p>
+          </InfosContact>
+          {contact.length > 0 ?
+          contact.map(item => (
+            <InfosContatcApi key={item.idPessoa}>
+              <p>{item.tipoContato}</p>
+              <p>{item.telefone}</p>
+              <p>{item.descricao}</p>
+              <div>
+                <ButtonUpdate onClick={() => goContact(item.idContato)}>Editar</ButtonUpdate>
+                <ButtonRemove onClick={() => {handleDeleteContact(item.idContato)}}>Excluir</ButtonRemove>
+              </div>
+            </InfosContatcApi>
+          )) : <NoInfos>Ainda não há contatos cadastrados</NoInfos> }
           <ButtonsDetailsPerson>
             <button onClick={backToPeople}>Voltar</button>
-            <button onClick={handleAddress}>Cadastrar Endereço</button>
+            <button onClick={handleContact}>Cadastrar Contato</button>
           </ButtonsDetailsPerson>
+
         </DetailPerson>
       ))}
     </ContainerDetailPerson>
